@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+@import './layout/index.scss';
+@import './nav-bar/index.scss';
+@import './home-page/index.scss';
+@import './event-card/index.scss';
+@import './event-detail/index.scss';
+@import './my-events/index.scss';
+
+* {
+  box-sizing: border-box;
+  font-family: 'Open Sans', sans-serif;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background-color: #f4f4f4;
+  color: #222;
+}

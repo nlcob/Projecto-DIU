@@ -1,0 +1,25 @@
+.event-detail {
+  &__back {
+    display: inline-block;
+    margin-bottom: 14px;
+    color: #004b85;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__box {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+
+    h2 {
+      margin-top: 0;
+    }
+  }
+}
