@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-// vista para mostrar los eventos inscritos (meta 3: revisar y cancelar inscripciones)
+// vista para revisar y cancelar eventos inscritos
 export const MyEventsPage = ({ inscripciones = [], setInscripciones }) => {
   const cancelarInscripcion = (idEvento) => {
     if (setInscripciones) {
@@ -21,27 +21,20 @@ export const MyEventsPage = ({ inscripciones = [], setInscripciones }) => {
         </div>
       ) : (
         <div>
-          <p>Tienes {inscripciones.length} evento(s) inscrito(s).</p>
+          <p>Tienes {inscripciones.length} evento(s) registrado(s) en tu agenda.</p>
 
           <div className='my-events__list'>
             {inscripciones.map((ev) => (
-              <div
-                key={ev.id}
-                className='my-events__item'
-                style={{
-                  borderTop: '1px solid #eee',
-                  paddingTop: '12px',
-                  marginTop: '12px'
-                }}
-              >
+              <div key={ev.id} className='my-events__item'>
                 <h3>
                   <Link to={`/evento/${ev.id}`}>{ev.titulo}</Link>
                 </h3>
-                <p><strong>Fecha:</strong> {ev.fecha}</p>
-                <p><strong>Campus:</strong> {ev.campus}</p>
+                <p><strong>Fecha y hora:</strong> {ev.fecha} ({ev.hora})</p>
+                <p><strong>Campus y lugar:</strong> {ev.campus} - {ev.lugar}</p>
                 <p><strong>Modalidad:</strong> {ev.modalidad}</p>
                 <button
                   type='button'
+                  className='my-events__cancel-btn'
                   onClick={() => cancelarInscripcion(ev.id)}
                 >
                   Cancelar inscripción

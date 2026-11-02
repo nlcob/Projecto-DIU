@@ -4,13 +4,15 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import HomePage from '../pages/home_page'
 import EventDetailPage from '../pages/event_detail_page'
 import MyEventsPage from '../pages/my_events_page'
+import AlertsPage from '../pages/alerts_page'
 import NavBar from '../components/nav_bar'
 import { EVENTOS_USM } from '../data/events_data'
 
-// componente principal con las rutas y estado de inscripciones
+// componente principal con las rutas y estados globales
 const Layout = () => {
   const [eventos] = useState(EVENTOS_USM)
   const [inscripciones, setInscripciones] = useState([])
+  const [suscripcion, setSuscripcion] = useState(null)
 
   return (
     <BrowserRouter>
@@ -19,7 +21,10 @@ const Layout = () => {
           <h1 className='layout__title'>Eventos USM</h1>
           <p className='layout__subtitle'>Portal de actividades y charlas para estudiantes</p>
         </header>
-        <NavBar totalInscripciones={inscripciones.length} />
+        <NavBar
+          totalInscripciones={inscripciones.length}
+          tieneSuscripcion={Boolean(suscripcion)}
+        />
         <div className='layout__page'>
           <Routes>
             <Route
@@ -43,6 +48,16 @@ const Layout = () => {
                   eventos={eventos}
                   inscripciones={inscripciones}
                   setInscripciones={setInscripciones}
+                />
+              }
+            />
+            <Route
+              path='/alertas'
+              element={
+                <AlertsPage
+                  eventos={eventos}
+                  suscripcion={suscripcion}
+                  setSuscripcion={setSuscripcion}
                 />
               }
             />
