@@ -2,14 +2,13 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CAMPUS_OPTIONS, AREA_OPTIONS } from '../data/events_data'
 
-// vista para configurar alertas personalizadas por area y campus
+// vista para configurar alertas por correo segun area y campus
 export const AlertsPage = ({ eventos, suscripcion, setSuscripcion }) => {
   const areasDisponibles = AREA_OPTIONS.filter((op) => op !== 'Todas')
 
   const [correo, setCorreo] = useState(suscripcion ? suscripcion.correo : '')
   const [campus, setCampus] = useState(suscripcion ? suscripcion.campus : 'Todos')
   const [areas, setAreas] = useState(suscripcion ? suscripcion.areas : [])
-  const [canal, setCanal] = useState(suscripcion ? suscripcion.canal : 'Correo institucional')
   const [error, setError] = useState('')
   const [editando, setEditando] = useState(!suscripcion)
 
@@ -37,8 +36,7 @@ export const AlertsPage = ({ eventos, suscripcion, setSuscripcion }) => {
     setSuscripcion({
       correo: correo.trim(),
       campus,
-      areas,
-      canal
+      areas
     })
     setEditando(false)
   }
@@ -48,7 +46,6 @@ export const AlertsPage = ({ eventos, suscripcion, setSuscripcion }) => {
     setCorreo('')
     setCampus('Todos')
     setAreas([])
-    setCanal('Correo institucional')
     setEditando(true)
   }
 
@@ -64,14 +61,13 @@ export const AlertsPage = ({ eventos, suscripcion, setSuscripcion }) => {
     <div className='alerts-page'>
       <h2>Alertas por Área de Interés</h2>
       <p className='alerts-page__desc'>
-        Configura qué tipos de charlas o actividades te interesan para recibir avisos sin llenarte de correos de otras sedes o carreras.
+        Suscríbete para recibir avisos por correo solo de las charlas o actividades de tu sede y áreas de interés.
       </p>
 
       {suscripcion && !editando ? (
         <div className='alerts-page__active'>
           <h3>Tu suscripción está activa</h3>
-          <p><strong>Contacto:</strong> {suscripcion.correo}</p>
-          <p><strong>Canal de aviso:</strong> {suscripcion.canal}</p>
+          <p><strong>Correo registrado:</strong> {suscripcion.correo}</p>
           <p><strong>Campus preferido:</strong> {suscripcion.campus}</p>
           <p><strong>Áreas seleccionadas:</strong> {suscripcion.areas.join(', ')}</p>
 
@@ -106,7 +102,7 @@ export const AlertsPage = ({ eventos, suscripcion, setSuscripcion }) => {
       ) : (
         <form className='alerts-page__form' onSubmit={guardarSuscripcion}>
           <div className='alerts-page__field'>
-            <label htmlFor='correo-alerta'>Correo institucional o personal:</label>
+            <label htmlFor='correo-alerta'>Correo institucional:</label>
             <input
               id='correo-alerta'
               type='email'
@@ -117,7 +113,7 @@ export const AlertsPage = ({ eventos, suscripcion, setSuscripcion }) => {
           </div>
 
           <div className='alerts-page__field'>
-            <label htmlFor='campus-alerta'>Campus o sede de interés:</label>
+            <label htmlFor='campus-alerta'>Campus o sede:</label>
             <select
               id='campus-alerta'
               value={campus}
@@ -128,18 +124,6 @@ export const AlertsPage = ({ eventos, suscripcion, setSuscripcion }) => {
                   {op}
                 </option>
               ))}
-            </select>
-          </div>
-
-          <div className='alerts-page__field'>
-            <label htmlFor='canal-alerta'>Medio de notificación:</label>
-            <select
-              id='canal-alerta'
-              value={canal}
-              onChange={(e) => setCanal(e.target.value)}
-            >
-              <option value='Correo institucional'>Resumen por correo</option>
-              <option value='Comunidad de WhatsApp'>Aviso para grupo de WhatsApp</option>
             </select>
           </div>
 

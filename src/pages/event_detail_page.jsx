@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 
-// vista detalle del evento con inscripcion y opcion para compartir
+// vista detalle del evento e inscripcion
 export const EventDetailPage = ({ eventos, inscripciones = [], setInscripciones }) => {
   const { id } = useParams()
-  const [copiado, setCopiado] = useState(false)
   const evento = eventos.find((ev) => String(ev.id) === String(id))
 
   if (!evento) {
@@ -26,21 +25,8 @@ export const EventDetailPage = ({ eventos, inscripciones = [], setInscripciones 
     }
   }
 
-  const textoCompartir = `${evento.titulo} - ${evento.fecha} (${evento.hora}) en ${evento.campus}, ${evento.lugar}.`
-
-  // copia un resumen del evento para mandarlo a companeros
-  const copiarResumen = () => {
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(`${textoCompartir} Link: ${window.location.href}`)
-    }
-    setCopiado(true)
-    setTimeout(() => setCopiado(false), 3000)
-  }
-
   const cuposDisponibles =
     evento.cupos !== null ? (yaInscrito ? evento.cupos - 1 : evento.cupos) : null
-
-  const urlWhatsapp = `https://wa.me/?text=${encodeURIComponent(textoCompartir)}`
 
   return (
     <div className='event-detail'>
@@ -82,30 +68,7 @@ export const EventDetailPage = ({ eventos, inscripciones = [], setInscripciones 
                 : 'Guardar en mis eventos'}
             </button>
           )}
-
-          <button
-            type='button'
-            className='event-detail__share-btn'
-            onClick={copiarResumen}
-          >
-            Copiar info para compartir
-          </button>
-
-          <a
-            href={urlWhatsapp}
-            target='_blank'
-            rel='noreferrer'
-            className='event-detail__wa-link'
-          >
-            Compartir por WhatsApp
-          </a>
         </div>
-
-        {copiado && (
-          <p className='event-detail__copied'>
-            Información del evento copiada al portapapeles.
-          </p>
-        )}
       </div>
     </div>
   )
